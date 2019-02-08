@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous">
+  <title>Товары и сувенирная продукция вагона</title>
+</head>
+
+<body>
+  <div class="modal" id="modalLabel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Добавить запись</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="productSelect">Товар</label>
+              </div>
+              <select class="custom-select" id="productSelect">
+                <option selected>Чай крупнолистовой</option>
+                <option value="1">Кофе 3 в 1 растворимый</option>
+                <option value="2">Вода газированная 0.5л</option>
+              </select>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Цена</span>
+              </div>
+              <input type="text" class="form-control" id="priceInput" aria-label="Положительное число с плавающей точкой">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Количество</span>
+              </div>
+              <input type="text" class="form-control" id="countInput" aria-label="Целочисленной положительное число">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+          <button type="button" class="btn btn-primary">Добавить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modelClear" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Удаление записей</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Вы действительно хотите удалить все записи данного вагона?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Отменить</button>
+          <button type="button" class="btn btn-danger">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modelItem" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Чай Гринфилд: 45 рублей</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="container">
+              <div class="d-flex flex-row">
+                <img src="https://www.utkonos.ru/resample/450x450q95/images/photo/3310/3310235H.jpg?mtime=5b72a0a1"
+                  class="img-fluid w-50 h-50" alt="Responsive image">
+                <ul class="list-group">
+                  <li class="list-group-item">Крупнолистовой</li>
+                  <li class="list-group-item">В термосаше</li>
+                  <li class="list-group-item">В ассортименте</li>
+                  <li class="list-group-item">1.5-2 гр</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <nav class="navbar bg-light d-flex flex-row">
+    <div class="input-group" style="width: 20%;">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-green">Вагон</div>
+      </div>
+      <select class="form-control" id="wagonSelect">
+        <option>#1</option>
+        <option>#2</option>
+        <option>#3</option>
+        <option>#4</option>
+        <option>#5</option>
+      </select>
+    </div>
+    <div>
+      <label>Всего товара на сумму: </label>
+      <label id="totalLabel">15465 ₽</label>
+    </div>
+    <div>
+      <label>Проданно товара на сумму: </label>
+      <label id="sellLabel">6350 ₽</label>
+    </div>
+    <div>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalLabel">Добавить запись</button>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modelClear">Очистить записи вагона</button>
+    </div>
+  </nav>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Наименование</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Всего</th>
+        <th scope="col">Остаток</th>
+        <th scope="col">Проданно на сумму</th>
+        <th scope="col">Операции</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td><button class="btn btn-link" data-toggle="modal" data-target="#modelItem">Чай крупнолистовой</button></td>
+        <td>45 ₽</td>
+        <td>40</td>
+        <td>15</td>
+        <td>1125 ₽</td>
+        <td>
+          <div class="d-inline-flex flex-row">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+              <input type="text" id="interactionInput" class="form-control" style="max-width: 30px" aria-label="Example text with button addon"
+                aria-describedby="button-addon1">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td><button class="btn btn-link" data-toggle="modal" data-target="#modelItem">Кофе 3 в 1 растворимый</button></td>
+        <td>30 ₽</td>
+        <td>20</td>
+        <td>13</td>
+        <td>210 ₽</td>
+        <td>
+          <div class="d-inline-flex flex-row">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+              <input type="text" id="interactionInput" class="form-control" style="max-width: 30px" aria-label="Example text with button addon"
+                aria-describedby="button-addon1">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td><button class="btn btn-link" data-toggle="modal" data-target="#modelItem">Вода газированная 0.5л</button></td>
+        <td>53 ₽</td>
+        <td>15</td>
+        <td>3</td>
+        <td>636 ₽</td>
+        <td>
+          <div class="d-inline-flex flex-row">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+              <input type="text" id="interactionInput" class="form-control" style="max-width: 30px" aria-label="Example text with button addon"
+                aria-describedby="button-addon1">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="errorAlert" class="alert alert-danger fixed-bottom w-25" role="alert">
+    <strong>Ошибка!</strong>
+    Проверьте правильность введенных данных
+  </div>
+</body>
+</html>
