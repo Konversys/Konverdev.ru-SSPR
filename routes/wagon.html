@@ -23,9 +23,9 @@
 
   <script>
     $(document).ready(
-    function retitle(){
-      var id = location.href.split('=')[1];
-    });
+      function retitle() {
+        var id = location.href.split('=')[1];
+      });
     $(document).ready(function () {
       $('#wagonSelect').on("change", function () {
         var val = $(this).val();
@@ -40,43 +40,38 @@
   <div class="modal" id="modalLabel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Добавить запись</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="productSelect">Товар</label>
+        <form method="GET" action="/../src/action.php">
+          <div class="modal-header">
+            <h5 class="modal-title">Добавить запись</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="productSelect">Товар</label>
+                </div>
+                <select class="custom-select" name="product">
+                  {% for item in products %}
+                  <option value="{{item.id}}">{{item.title}}</option>
+                  {% endfor %}
+                </select>
               </div>
-              <select class="custom-select" id="productSelect">
-                <option selected>Чай крупнолистовой</option>
-                <option value="1">Кофе 3 в 1 растворимый</option>
-                <option value="2">Вода газированная 0.5л</option>
-              </select>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Цена</span>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Количество</span>
+                </div>
+                <input type="text" class="form-control" name="count">
               </div>
-              <input type="text" class="form-control" id="priceInput"
-                aria-label="Положительное число с плавающей точкой">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Количество</span>
-              </div>
-              <input type="text" class="form-control" id="countInput" aria-label="Целочисленной положительное число">
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
-          <button type="button" class="btn btn-primary">Добавить</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+            <button type="submit" class="btn btn-primary" name="action" value="addToWagon{{wagon_id}}">Добавить</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -93,46 +88,14 @@
           <p>Вы действительно хотите удалить все записи данного вагона?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Отменить</button>
-          <button type="button" class="btn btn-danger">Удалить</button>
+          <form method="GET" action="/../src/action.php">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Отменить</button>
+            <button type="submit" class="btn btn-danger" name="action" value="ClearWagon{{wagon_id}}">Добавить</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="modal" id="modelItem" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Чай Гринфилд: 45 рублей</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="container">
-            <div class="container">
-              <div class="d-flex flex-row">
-                <img src="https://www.utkonos.ru/resample/450x450q95/images/photo/3310/3310235H.jpg?mtime=5b72a0a1"
-                  class="img-fluid w-50 h-50" alt="Responsive image">
-                <ul class="list-group">
-                  <li class="list-group-item">Крупнолистовой</li>
-                  <li class="list-group-item">В термосаше</li>
-                  <li class="list-group-item">В ассортименте</li>
-                  <li class="list-group-item">1.5-2 гр</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
   <nav class="navbar bg-light d-flex flex-row">
     <div class="input-group" style="width: 20%;">
       <select class="form-control" id="wagonSelect">
@@ -163,31 +126,38 @@
         <th scope="col">Операции</th>
       </tr>
     </thead>
-    <tbody>
-      {% for item in wagon %}
-      <tr>
-        <td><button class="btn btn-link" data-toggle="modal" data-target="#modelItem">{{item.title}}</button></td>
-        <td>{{item.price}} ₽</td>
-        <td>{{item.count}}</td>
-        <td>{{item.selled}}</td>
-        <td>{{ item.price * item.selled }} ₽</td>
-        <td>
-          <div class="d-inline-flex flex-row">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" type="button">+</button>
-              </div>
-              <input type="text" id="interactionInput" class="form-control" style="max-width: 30px"
-                aria-label="Example text with button addon" aria-describedby="button-addon1">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">-</button>
+    <form method="GET" action="/../src/action.php">
+      <input hidden name="id" value="{{wagon_id}}"></p>
+      <tbody>
+        {% for item in wagon %}
+        <input type="hidden" name="total_{{item.product}}" value="{{item.count}}">
+        <input type="hidden" name="selled_{{item.product}}" value="{{item.selled}}">
+        <tr>
+          <td><button class="btn btn-link" type="submit" name="action"
+              value="item_{{item.product}}">{{item.title}}</button></td>
+          <td>{{item.price}} ₽</td>
+          <td>{{item.count}}</td>
+          <td>{{item.selled}}</td>
+          <td>{{ item.price * item.selled }} ₽</td>
+          <td>
+            <div class="d-inline-flex flex-row">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-secondary" type="submit" name="action"
+                    value="add_{{item.product}}">+</button>
+                </div>
+                <input type="text" name="count_{{item.product}}" class="form-control" style="max-width: 70px">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit" name="action"
+                    value="sub_{{item.product}}">-</button>
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </form>
   </table>
   <div id="errorAlert" class="alert alert-danger fixed-bottom w-25" role="alert">
     <strong>Ошибка!</strong>

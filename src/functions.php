@@ -13,6 +13,28 @@ function GetWagons(mysqli $connection)
     return QueryExecute($connection, $query);
 }
 
+function ClearWagon(mysqli $connection, int $wagon)
+{
+    $query = sprintf("delete from stock where wagon = %d", $wagon);
+    return QueryExecute($connection, $query);
+}
+
+function ChangeCountProductToWagon(mysqli $connection, int $wagon, int $product, int $count)
+{
+    $query = sprintf("UPDATE stock SET selled = selled + %d where wagon = %d and product = %d",
+     $count, $wagon, $product);
+    return QueryExecute($connection, $query);
+}
+
+function UpdateStock(mysqli $connection, int $wagon, int $product, int $count)
+{
+    $query = sprintf("INSERT INTO stock(wagon, product, count, selled) 
+    VALUES(%d, %d, %d, 0) 
+    ON DUPLICATE KEY UPDATE count = count + %d",
+     $wagon, $product, $count, $count);
+    return QueryExecute($connection, $query);
+}
+
 function GetWagon(mysqli $connection, int $id)
 {
     $query = sprintf("SELECT stock.wagon, stock.product, product.title, product.price, stock.count, stock.selled 
