@@ -7,27 +7,17 @@ function QueryExecute(mysqli $connection, string $query)
     return $data;
 }
 
-function GetTotalWP(mysqli $connection, int $wagon, int $product)
+function GetWagons(mysqli $connection)
 {
-    $query = sprintf("select gettotalwp(%d, %d) as total;", $wagon, $product);
+    $query = sprintf("SELECT * from wagon");
     return QueryExecute($connection, $query);
 }
 
-function GetSelledWP(mysqli $connection, int $wagon, int $product)
+function GetWagon(mysqli $connection, int $id)
 {
-    $query = sprintf("select getselledwp(%d, %d) as selled;", $wagon, $product);
-    return QueryExecute($connection, $query);
-}
-
-function GetTotalW(mysqli $connection, int $wagon)
-{
-    $query = sprintf("select gettotalw(%d) as total;", $wagon);
-    return QueryExecute($connection, $query);
-}
-
-function GetSelledW(mysqli $connection, int $wagon)
-{
-    $query = sprintf("select getselledw(%d) as selled;", $wagon);
+    $query = sprintf("SELECT stock.wagon, stock.product, product.title, product.price, stock.count, stock.selled 
+    from stock, product
+    where stock.product = product.id and stock.wagon = %d", $id);
     return QueryExecute($connection, $query);
 }
 

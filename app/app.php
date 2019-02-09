@@ -17,8 +17,10 @@ $app->get("/product={id}", function ($id) use($app, $link) {
     return $app['twig']->render("product_edit.html", array('product' => $product, 'tags' => $tags));
 });
 
-$app->get("/wagon", function () use($app, $link) {
-    return $app['twig']->render("wagon.php", array());
+$app->get("/wagon={id}", function ($id) use($app, $link) {
+    $wagon = GetWagon($link, $id);
+    $wagons = GetWagons($link);
+    return $app['twig']->render("wagon.html", array('wagon' => $wagon, 'wagons' => $wagons, 'wagon_id' => $id));
 });
 
 return $app;
